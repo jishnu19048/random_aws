@@ -1,0 +1,20 @@
+[
+    {
+      "id": 1,
+      "type": "Sales",
+      "name": "Dwight Schrute",
+      "description": "Battlestar Galatica"
+    },
+    {
+      "id": 2,
+      "type": "Accounting",
+      "name": "Kevin Malone",
+      "description": "M&Ms"
+    },
+    {
+      "id": 3,
+      "type": "Reception",
+      "name": "Erin",
+      "description": "Glee party"
+    }
+  ]
