@@ -53,3 +53,37 @@ app.get('/worker/:id', function (req, res) {
         }
     });
 })
+
+//using scan function
+//need to use ExclusiveStartKey & LastEvaluatedKey
+app.get('/worker', function (req, res) {
+    var params = {
+        TableName: "Scranton",
+        ProjectionExpression: "#id, #name, #type, #description",
+        ExpressionAttributeNames: {
+            "#id": "id",
+            "#name": "name",
+            "#type": "type",
+            "#description": "description"
+        }
+    };
+    console.log("Scanning table.");
+    db.scan(params, onScan);
+    function onScan(err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            res.send(data)
+            // print all the Cars
+            console.log("Scan succeeded.");
+            data.Items.forEach(function(w) {
+               console.log(w.id, w.type, w.name)
+            });
+    if (typeof data.LastEvaluatedKey != "undefined") {
+                console.log("Scanning for more...");
+                params.ExclusiveStartKey = data.LastEvaluatedKey;
+                db.scan(params, onScan);
+            }
+        }
+      }
+ });
